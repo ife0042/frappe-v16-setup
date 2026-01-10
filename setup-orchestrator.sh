@@ -103,7 +103,7 @@ sudo -E -u "$FRAPPE_APP_USER" env \
     -p "$FRAPPE_DB_PASSWORD" \
     -s "$SITE_NAME" \
     -a "$APP_ADMIN_PASSWORD" \
-    --dev "$DEV_MODE"
+    -d "$DEV_MODE"
 log "Completed user phase."
 
 log "✅ Orchestrated setup completed successfully."
