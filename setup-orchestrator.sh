@@ -6,7 +6,7 @@ fi
 set -Eeuo pipefail
 
 # How to run (full orchestration):
-#   sudo /opt/frappe-setup/setup-orchestrator.sh -u frappe -p 'root_pwd' -s 'apps.localhost' -a 'admin_pwd' -d true -k "ssh-ed25519 AAAA... user@example.com"
+# sudo /opt/frappe-v16-setup/setup-orchestrator.sh -u frappe -p 'root_pwd' -s 'apps.localhost' -a 'admin_pwd' -d true -k "ssh-ed25519 AAAA... user@example.com"
 
 # Must run as root
 if [[ "$EUID" -ne 0 ]]; then

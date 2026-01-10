@@ -40,10 +40,10 @@ Security caveat: Passwordless sudo is added for the app user to streamline setup
 
 ## Installation (place scripts on the server)
 ```bash
-sudo mkdir -p /opt/frappe-setup
+sudo mkdir -p /opt/frappe-v16-setup
 # Replace /path/to/local/repo with your actual path
-sudo cp -a /path/to/local/repo/* /opt/frappe-setup/
-sudo chmod +x /opt/frappe-setup/*.sh
+sudo cp -a /path/to/local/repo/* /opt/frappe-v16-setup/
+sudo chmod +x /opt/frappe-v16-setup/*.sh
 ```
 
 You can also run them from any directory, but the orchestrator assumes the scripts live together.
@@ -54,7 +54,7 @@ You can also run them from any directory, but the orchestrator assumes the scrip
 Run the full orchestration as root. This performs both phases and passes the right arguments through.
 
 ```bash
-sudo /opt/frappe-setup/setup-orchestrator.sh \
+sudo /opt/frappe-v16-setup/setup-orchestrator.sh \
   -u frappe \
   -p 'mariadb_root_password' \
   -s 'apps.localhost' \
@@ -82,7 +82,7 @@ Reasons for key flags:
 Run as root to create the app user, set sudoers, and install base packages.
 
 ```bash
-sudo /opt/frappe-setup/root-system-setup.sh \
+sudo /opt/frappe-v16-setup/root-system-setup.sh \
   -u frappe \
   -k "ssh-ed25519 AAAA... user@example.com"
 ```
@@ -104,7 +104,7 @@ sudo su - frappe
 Run as the target app user (not root). This secures MariaDB, installs runtime tools, initializes bench, and creates the site.
 
 ```bash
-/opt/frappe-setup/setup-frappe-app.sh \
+/opt/frappe-v16-setup/setup-frappe-app.sh \
   -u frappe \
   -p 'mariadb_root_password' \
   -s 'apps.localhost' \
@@ -157,19 +157,19 @@ What this installs (and why):
 
 ### `setup-orchestrator.sh`
 ```bash
-sudo /opt/frappe-setup/setup-orchestrator.sh \
+sudo /opt/frappe-v16-setup/setup-orchestrator.sh \
   -u <user> -p <db_root_pw> -s <site> -a <admin_pw> [-d true|false] [-k "<ssh_pub_key>"]
 ```
 
 ### `root-system-setup.sh`
 ```bash
-sudo /opt/frappe-setup/root-system-setup.sh \
+sudo /opt/frappe-v16-setup/root-system-setup.sh \
   -u <user> [-k "<ssh_pub_key>"]
 ```
 
 ### `setup-frappe-app.sh`
 ```bash
-/opt/frappe-setup/setup-frappe-app.sh \
+/opt/frappe-v16-setup/setup-frappe-app.sh \
   -u <user> -p <db_root_pw> -s <site> -a <admin_pw> [-d true|false]
 ```
 

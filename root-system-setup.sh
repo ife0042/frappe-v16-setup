@@ -102,7 +102,7 @@ log "Root package installation complete."
 echo
 echo "Next: switch to the $FRAPPE_APP_USER user and run setup-user.sh with the same parameters:"
 echo "  sudo su - $FRAPPE_APP_USER"
-echo "  /opt/frappe-setup/setup-frappe-app.sh -u '$FRAPPE_APP_USER' -p '******' -s 'your.site' -a '******'"
+echo "  /opt/frappe-v16-setup/setup-frappe-app.sh -u '$FRAPPE_APP_USER' -p '******' -s 'your.site' -a '******'"
 echo
 log "Done."
 
