@@ -134,7 +134,7 @@ What this installs (and why):
 - To run the development server:
   ```bash
   cd ~/frappe-bench
-  bench start
+  source env/bin/activate && bench start
   ```
 - Production hardening (Supervisor, Nginx, SSL, firewall) is not included here.
 

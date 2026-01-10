@@ -157,6 +157,8 @@ bench init frappe-bench --frappe-branch version-16-beta
 # SITE CREATION
 #############################################
 cd ~/frappe-bench
+log "Installing honcho in bench virtualenv"
+( source env/bin/activate && uv pip install honcho )
 log "Creating site: $SITE_NAME"
 bench new-site "$SITE_NAME" \
   --db-root-username=root \
