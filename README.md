@@ -125,7 +125,7 @@ What this installs (and why):
 - **NVM + Node 24 + Yarn**: Frappe asset builds rely on Node/Yarn.
 - **uv + Python 3.14**: Fast, reproducible Python toolchain management.
 - **Bench CLI (5.28)**: Official tool to manage Frappe benches.
-- Bench init with `--frappe-branch version-16-beta` and site creation.
+- Bench init with `--frappe-branch version-16` and site creation.
 
 ---
 
