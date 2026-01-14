@@ -89,6 +89,9 @@ printf '%s\n' "$FRAPPE_APP_USER ALL=(ALL) NOPASSWD:ALL" > "/etc/sudoers.d/$FRAPP
 chmod 440 "/etc/sudoers.d/$FRAPPE_APP_USER"
 visudo -cf "/etc/sudoers.d/$FRAPPE_APP_USER" >/dev/null || fail "Invalid sudoers entry for $FRAPPE_APP_USER"
 
+log "Adding www-data group to $FRAPPE_APP_USER"
+usermod -aG $FRAPPE_APP_USER www-data
+
 log "Installing system packages"
 apt update
 apt install -y \
