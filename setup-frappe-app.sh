@@ -148,7 +148,7 @@ uv python install 3.14 --default
 # BENCH
 #############################################
 log "Installing Bench CLI"
-uv tool install frappe-bench==5.28
+uv tool install frappe-bench==5.29
 
 log "Initializing Bench"
 bench init frappe-bench --frappe-branch version-16
