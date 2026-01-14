@@ -93,36 +93,9 @@ MARIADB_EOF
 
 log "Installing wkhtmltopdf and dependencies"
 sudo apt install -y xvfb libfontconfig
-# Detect Ubuntu codename and download a matching wkhtmltopdf build, with Jammy fallback
-OS_CODENAME="$(. /etc/os-release && echo "${VERSION_CODENAME:-}")"
-ARCH="amd64"
-PRIMARY_VER="0.12.6.1-3"
-FALLBACK_VER="0.12.6.1-2"
-declare -a CANDIDATE_URLS=()
 
-if [[ -n "$OS_CODENAME" ]]; then
-  CANDIDATE_URLS+=("https://github.com/wkhtmltopdf/packaging/releases/download/${PRIMARY_VER}/wkhtmltox_${PRIMARY_VER}.${OS_CODENAME}_${ARCH}.deb")
-  CANDIDATE_URLS+=("https://github.com/wkhtmltopdf/packaging/releases/download/${FALLBACK_VER}/wkhtmltox_${FALLBACK_VER}.${OS_CODENAME}_${ARCH}.deb")
-fi
-# Always add Jammy fallback
-CANDIDATE_URLS+=("https://github.com/wkhtmltopdf/packaging/releases/download/${FALLBACK_VER}/wkhtmltox_${FALLBACK_VER}.jammy_${ARCH}.deb")
-
-WK_DEB_URL=""
-for url in "${CANDIDATE_URLS[@]}"; do
-  if wget -q --spider "$url"; then
-    WK_DEB_URL="$url"
-    break
-  fi
-done
-
-if [[ -z "$WK_DEB_URL" ]]; then
-  log "Could not find a matching wkhtmltopdf build, defaulting to Jammy fallback"
-  WK_DEB_URL="https://github.com/wkhtmltopdf/packaging/releases/download/${FALLBACK_VER}/wkhtmltox_${FALLBACK_VER}.jammy_${ARCH}.deb"
-fi
-
-WK_DEB_FILE="$(basename "$WK_DEB_URL")"
-wget -q "$WK_DEB_URL"
-sudo dpkg -i "$WK_DEB_FILE" || sudo apt install -y -f
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+sudo dpkg -i wkhtmltox_0.12.6.1-2.jammy_amd64.deb || sudo apt install -y -f
 
 #############################################
 # NVM / NODE / YARN
@@ -131,7 +104,8 @@ log "Installing NVM & Node"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
-source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 nvm install 24
 npm install -g yarn
@@ -139,16 +113,23 @@ npm install -g yarn
 #############################################
 # UV + PYTHON
 #############################################
-log "Installing uv & Python"
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source "$HOME/.local/bin/env"
+# log "Installing uv & Python"
+# curl -LsSf https://astral.sh/uv/install.sh | sh
+# # source "$HOME/.local/bin/env"
 uv python install 3.14 --default
+# sudo add-apt-repository -y ppa:deadsnakes/ppa
+# sudo apt install -y python3.14
+# sudo apt install -y python3-pip
 
 #############################################
 # BENCH
 #############################################
 log "Installing Bench CLI"
 uv tool install frappe-bench==5.28
+# then add the package path to the PATH environment variable
+export PATH="$HOME/.local/bin:$PATH"
+
+# python3.14 -m pip install frappe-bench==5.28
 
 log "Initializing Bench"
 bench init frappe-bench --frappe-branch version-16
